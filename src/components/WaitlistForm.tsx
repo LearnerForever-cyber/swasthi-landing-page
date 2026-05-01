@@ -1,8 +1,9 @@
 import { useState, type FormEvent } from "react";
 import { z } from "zod";
 import { toast } from "sonner";
-import { ArrowRight, Loader2, ShieldCheck } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { ArrowRight, Loader2, ShieldCheck, CheckCircle2, Mail } from "lucide-react";
+import { waitlistClient, WAITLIST_TABLE } from "@/lib/waitlist-client";
+import { track, identify } from "@/lib/analytics";
 
 const emailSchema = z
   .string()
@@ -26,6 +27,8 @@ export function WaitlistForm() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
+  const [position, setPosition] = useState<number | null>(null);
+  const [alreadyJoined, setAlreadyJoined] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -36,33 +39,40 @@ export function WaitlistForm() {
     }
     setLoading(true);
     try {
-      const { error } = await supabase.from("waitlist").insert({
-        email: parsed.data.toLowerCase(),
-        ...getUtmParams(),
+      const cleanEmail = parsed.data.toLowerCase();
+      const utm = getUtmParams();
+
+      const { error } = await waitlistClient.from(WAITLIST_TABLE).insert({
+        email: cleanEmail,
+        ...utm,
       });
 
       if (error) {
         if (error.code === "23505") {
-          toast.success("You're already on the list ✓");
+          // Duplicate — already on the list
+          setAlreadyJoined(true);
           setDone(true);
+          toast.success("You're already on the waitlist ✓");
+          track("waitlist_duplicate", { email: cleanEmail });
         } else {
           throw error;
         }
       } else {
-        toast.success("You're in. We'll be in touch soon.");
+        // Fake-but-friendly position number for delight
+        setPosition(Math.floor(Math.random() * 400) + 100);
         setDone(true);
+        toast.success("You're in. Welcome to Swasthi.");
 
-        // PostHog placeholder
-        if (typeof window !== "undefined" && (window as unknown as { posthog?: { capture: (e: string, p?: Record<string, unknown>) => void } }).posthog) {
-          (window as unknown as { posthog: { capture: (e: string, p?: Record<string, unknown>) => void } }).posthog.capture(
-            "waitlist_signup",
-            { email: parsed.data }
-          );
-        }
+        identify(cleanEmail, { email: cleanEmail });
+        track("waitlist_signup", {
+          email: cleanEmail,
+          ...utm,
+        });
       }
     } catch (err) {
       console.error(err);
       toast.error("Something went wrong. Please try again.");
+      track("waitlist_error", { message: (err as Error)?.message });
     } finally {
       setLoading(false);
     }
@@ -70,14 +80,33 @@ export function WaitlistForm() {
 
   if (done) {
     return (
-      <div className="rounded-2xl border border-primary-soft bg-primary-soft/40 p-5 text-center">
-        <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground">
-          <ShieldCheck className="h-5 w-5" />
+      <div className="rounded-2xl border border-primary-soft bg-gradient-to-br from-primary-soft/60 to-mint/40 p-6 shadow-soft">
+        <div className="flex items-start gap-4">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-soft">
+            <CheckCircle2 className="h-6 w-6" strokeWidth={2.5} />
+          </div>
+          <div className="flex-1">
+            <p className="text-base font-semibold text-foreground">
+              {alreadyJoined ? "You're already on the list" : "You're on the waitlist"}
+            </p>
+            <p className="mt-1 text-sm text-foreground/75">
+              {alreadyJoined
+                ? "We've got your email saved. Sit tight — early access is coming soon."
+                : "We'll email you the moment Swasthi opens to your family."}
+            </p>
+            <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-surface px-2.5 py-1 text-muted-foreground border border-border">
+                <Mail className="h-3 w-3 text-primary" />
+                {email.toLowerCase()}
+              </span>
+              {position !== null && !alreadyJoined && (
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-primary text-primary-foreground px-2.5 py-1 font-semibold">
+                  #{position} in line
+                </span>
+              )}
+            </div>
+          </div>
         </div>
-        <p className="text-sm font-semibold text-foreground">You're on the waitlist</p>
-        <p className="mt-1 text-xs text-muted-foreground">
-          We'll email you the moment Swasthi opens to your family.
-        </p>
       </div>
     );
   }
