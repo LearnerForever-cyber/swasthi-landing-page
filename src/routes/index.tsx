@@ -1,7 +1,9 @@
+import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Toaster } from "@/components/ui/sonner";
 import { PhoneMockup } from "@/components/PhoneMockup";
 import { WaitlistForm } from "@/components/WaitlistForm";
+import { initAnalytics } from "@/lib/analytics";
 import logo from "@/assets/swasthi-logo.jpg";
 
 export const Route = createFileRoute("/")({
@@ -28,6 +30,10 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  useEffect(() => {
+    initAnalytics();
+  }, []);
+
   return (
     <main className="min-h-screen">
       <Toaster richColors position="top-center" />
