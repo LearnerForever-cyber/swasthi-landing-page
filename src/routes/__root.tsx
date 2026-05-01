@@ -49,6 +49,14 @@ export const Route = createRootRoute({
         rel: "stylesheet",
         href: appCss,
       },
+      {
+        rel: "icon",
+        href: "/favicon.svg",
+        type: "image/svg+xml",
+      },
+    ],
+    meta: [
+      { name: "theme-color", content: "#0f172a" },
     ],
   }),
   shellComponent: RootShell,
