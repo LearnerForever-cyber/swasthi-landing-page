@@ -1,12 +1,17 @@
 import { createClient } from "@supabase/supabase-js";
 
-// External Supabase project used for waitlist storage.
-// Anon keys are publishable and safe to ship in client code.
-const SUPABASE_URL = "https://gntncwnkuxwtfkxkqrme.supabase.co";
-const SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdudG5jd25rdXh3dGZreGtxcm1lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NjQ2NjIsImV4cCI6MjA5MDU0MDY2Mn0.f-cWjCy-dJH_cgaeh2dhv5d_oSloMDIzdrkB_WqTPeE";
+// Supabase client for waitlist storage.
+// Uses VITE_* env variables loaded from .env
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
-export const WAITLIST_TABLE = "waitlist";
+if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  throw new Error(
+    "Missing Supabase credentials. Ensure VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY are set in .env"
+  );
+}
+
+export const WAITLIST_TABLE = "swasthi_waitlist";
 
 export const waitlistClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: {

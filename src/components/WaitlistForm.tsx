@@ -1,7 +1,13 @@
-import { useState, type FormEvent } from "react";
+import { useState, useEffect, type FormEvent } from "react";
 import { z } from "zod";
 import { toast } from "sonner";
-import { ArrowRight, Loader2, ShieldCheck, CheckCircle2, Mail } from "lucide-react";
+import {
+  ArrowRight,
+  Loader2,
+  ShieldCheck,
+  CheckCircle2,
+  Mail,
+} from "lucide-react";
 import { waitlistClient, WAITLIST_TABLE } from "@/lib/waitlist-client";
 import { track, identify } from "@/lib/analytics";
 
@@ -12,14 +18,26 @@ const emailSchema = z
   .email("Please enter a valid email")
   .max(255, "Email too long");
 
-function getUtmParams() {
-  if (typeof window === "undefined") return {};
-  const p = new URLSearchParams(window.location.search);
+interface UTMParams {
+  utm_source: string | null;
+  utm_campaign: string | null;
+  utm_medium: string | null;
+}
+
+function getUtmParams(): UTMParams {
+  if (typeof window === "undefined") {
+    return {
+      utm_source: "direct",
+      utm_campaign: "none",
+      utm_medium: "none",
+    };
+  }
+
+  const params = new URLSearchParams(window.location.search);
   return {
-    utm_source: p.get("utm_source"),
-    utm_medium: p.get("utm_medium"),
-    utm_campaign: p.get("utm_campaign"),
-    referrer: typeof document !== "undefined" ? document.referrer || null : null,
+    utm_source: params.get("utm_source") || "direct",
+    utm_campaign: params.get("utm_campaign") || "none",
+    utm_medium: params.get("utm_medium") || "none",
   };
 }
 
@@ -29,55 +47,88 @@ export function WaitlistForm() {
   const [done, setDone] = useState(false);
   const [position, setPosition] = useState<number | null>(null);
   const [alreadyJoined, setAlreadyJoined] = useState(false);
+  const [utmParams, setUtmParams] = useState<UTMParams>({
+    utm_source: "direct",
+    utm_campaign: "none",
+    utm_medium: "none",
+  });
+
+  useEffect(() => {
+    setUtmParams(getUtmParams());
+  }, []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    // Validate email
     const parsed = emailSchema.safeParse(email);
     if (!parsed.success) {
       toast.error(parsed.error.issues[0].message);
+      track("waitlist_signup_attempted", {
+        success: false,
+        error: parsed.error.issues[0].message,
+        ...utmParams,
+      });
       return;
     }
-    setLoading(true);
-    try {
-      const cleanEmail = parsed.data.toLowerCase();
-      const utm = getUtmParams();
 
-      const { error } = await waitlistClient.from(WAITLIST_TABLE).insert({
-        email: cleanEmail,
-        ...utm,
+    setLoading(true);
+    const cleanEmail = parsed.data.toLowerCase();
+
+    try {
+      track("waitlist_signup_attempted", {
+        ...utmParams,
       });
 
+      // Insert into Supabase
+      const { error } = await waitlistClient
+        .from(WAITLIST_TABLE)
+        .insert({
+          email: cleanEmail,
+          utm_source: utmParams.utm_source,
+          utm_campaign: utmParams.utm_campaign,
+          utm_medium: utmParams.utm_medium,
+        });
+
       if (error) {
+        // Handle duplicate email (unique constraint violation)
         if (error.code === "23505") {
-          // Duplicate — already on the list
           setAlreadyJoined(true);
           setDone(true);
-          toast.success("You're already on the waitlist ✓");
-          track("waitlist_duplicate", { email: cleanEmail });
+          toast.success("You're already on the waitlist.");
+          track("waitlist_signup_duplicate", {
+            ...utmParams,
+          });
         } else {
           throw error;
         }
       } else {
-        // Fake-but-friendly position number for delight
+        // Success: generate a fun position number
         setPosition(Math.floor(Math.random() * 400) + 100);
         setDone(true);
-        toast.success("You're in. Welcome to Swasthi.");
+        toast.success("Welcome to Swasthi Early Access.");
 
-        identify(cleanEmail, { email: cleanEmail });
-        track("waitlist_signup", {
-          email: cleanEmail,
-          ...utm,
+        // Identify user and track success
+        identify(cleanEmail, {
+          email_domain: cleanEmail.split("@")[1],
+        });
+        track("waitlist_signup_completed", {
+          ...utmParams,
         });
       }
     } catch (err) {
       console.error(err);
       toast.error("Something went wrong. Please try again.");
-      track("waitlist_error", { message: (err as Error)?.message });
+      track("waitlist_signup_error", {
+        error: (err as Error)?.message || "Unknown error",
+        ...utmParams,
+      });
     } finally {
       setLoading(false);
     }
   };
 
+  // Success state
   if (done) {
     return (
       <div className="rounded-2xl border border-primary-soft bg-gradient-to-br from-primary-soft/60 to-mint/40 p-6 shadow-soft">
@@ -87,7 +138,9 @@ export function WaitlistForm() {
           </div>
           <div className="flex-1">
             <p className="text-base font-semibold text-foreground">
-              {alreadyJoined ? "You're already on the list" : "You're on the waitlist"}
+              {alreadyJoined
+                ? "You're already on the list"
+                : "You're on the waitlist"}
             </p>
             <p className="mt-1 text-sm text-foreground/75">
               {alreadyJoined
@@ -111,6 +164,7 @@ export function WaitlistForm() {
     );
   }
 
+  // Form state
   return (
     <form onSubmit={handleSubmit} className="space-y-3">
       <div className="flex flex-col sm:flex-row gap-2 p-1.5 sm:p-1.5 rounded-2xl bg-surface border border-border shadow-soft focus-within:ring-2 focus-within:ring-ring/40 transition">
@@ -127,9 +181,15 @@ export function WaitlistForm() {
         <button
           type="submit"
           disabled={loading}
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary-deep disabled:opacity-60"
+          className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary-deep disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <>Join the Waitlist <ArrowRight className="h-4 w-4" /></>}
+          {loading ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <>
+              Join the Waitlist <ArrowRight className="h-4 w-4" />
+            </>
+          )}
         </button>
       </div>
       <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
