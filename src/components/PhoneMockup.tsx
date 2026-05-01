@@ -12,11 +12,10 @@ import {
   Users,
   ChevronRight,
 } from "lucide-react";
-import arjunAvatar from "@/assets/arjun-avatar.jpg";
 
 export function PhoneMockup() {
   const members = [
-    { name: "Self", color: "oklch(0.78 0.05 30)", initial: "S", active: true },
+    { name: "Self", color: "oklch(0.52 0.09 185)", initial: "AK", active: true },
     { name: "Mom", color: "oklch(0.55 0.08 30)", initial: "M" },
     { name: "Dad", color: "oklch(0.65 0.04 80)", initial: "D" },
   ];
@@ -54,14 +53,9 @@ export function PhoneMockup() {
             {/* Greeting */}
             <div className="flex items-center justify-between px-1 sticky top-0 bg-[oklch(0.985_0.005_180)] z-10 py-1 -mx-1 px-2">
               <div className="flex items-center gap-2.5">
-                <img
-                  src={arjunAvatar}
-                  alt="Arjun"
-                  loading="lazy"
-                  width={40}
-                  height={40}
-                  className="h-10 w-10 rounded-full object-cover ring-2 ring-primary/40"
-                />
+                <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary to-primary-deep ring-2 ring-primary/30 flex items-center justify-center text-primary-foreground font-bold text-xs">
+                  AK
+                </div>
                 <div>
                   <p className="text-[10px] text-muted-foreground leading-tight">Good Morning,</p>
                   <h3 className="text-base font-bold text-primary-deep leading-tight">Arjun</h3>
