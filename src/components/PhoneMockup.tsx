@@ -12,6 +12,7 @@ import {
   Users,
   ChevronRight,
 } from "lucide-react";
+import arjunAvatar from "@/assets/arjun-avatar.jpg";
 
 export function PhoneMockup() {
   const members = [
@@ -47,16 +48,23 @@ export function PhoneMockup() {
           </div>
 
           {/* Content */}
-          <div className="px-4 pt-3 pb-24 space-y-3.5 max-h-[640px] overflow-hidden">
+          <div
+            className="px-4 pt-3 pb-24 space-y-3.5 h-[640px] overflow-y-auto scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden overscroll-contain"
+          >
             {/* Greeting */}
-            <div className="flex items-center justify-between px-1">
+            <div className="flex items-center justify-between px-1 sticky top-0 bg-[oklch(0.985_0.005_180)] z-10 py-1 -mx-1 px-2">
               <div className="flex items-center gap-2.5">
-                <div className="h-10 w-10 rounded-full ring-2 ring-primary/40 bg-gradient-to-br from-primary-soft to-mint flex items-center justify-center text-primary-deep font-semibold text-sm">
-                  S
-                </div>
+                <img
+                  src={arjunAvatar}
+                  alt="Arjun"
+                  loading="lazy"
+                  width={40}
+                  height={40}
+                  className="h-10 w-10 rounded-full object-cover ring-2 ring-primary/40"
+                />
                 <div>
                   <p className="text-[10px] text-muted-foreground leading-tight">Good Morning,</p>
-                  <h3 className="text-base font-bold text-primary-deep leading-tight">Swasthi</h3>
+                  <h3 className="text-base font-bold text-primary-deep leading-tight">Arjun</h3>
                 </div>
               </div>
               <Users className="h-4 w-4 text-primary-deep" />
