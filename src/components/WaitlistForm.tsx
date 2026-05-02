@@ -173,7 +173,7 @@ export function WaitlistForm() {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="your@email.com"
+          placeholder="Enter your email for early access"
           maxLength={255}
           aria-label="Email address"
           className="flex-1 bg-transparent px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 focus:outline-none"
@@ -181,20 +181,20 @@ export function WaitlistForm() {
         <button
           type="submit"
           disabled={loading}
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary-deep disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-bold text-primary-foreground transition hover:bg-primary-deep hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? (
             <Loader2 className="h-4 w-4 animate-spin" />
           ) : (
             <>
-              Join the Waitlist <ArrowRight className="h-4 w-4" />
+              Get Early Access <ArrowRight className="h-4 w-4" />
             </>
           )}
         </button>
       </div>
       <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
         <ShieldCheck className="h-3.5 w-3.5 text-primary" />
-        Private, Secure & AI-Assisted · No spam, ever.
+        Private • Secure • Built for Indian prescriptions • No spam, ever.
       </p>
     </form>
   );
