@@ -29,20 +29,20 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Swasthi — Your family's medication clarity system" },
+      { title: "Swasthi — India's Prescription Clarity + Family Medication Governance Platform" },
       {
         name: "description",
         content:
-          "AI-assisted prescription clarity and medication continuity for Indian families managing chronic care. Join the waitlist.",
+          "Decode Indian prescriptions (OD/BD/TDS). Manage family medicines with privacy. Private beta for BP, Diabetes, Thyroid families. Founder-built. Doctor-supported.",
       },
-      { property: "og:title", content: "Swasthi — Your family's medication clarity system" },
+      { property: "og:title", content: "Swasthi — Prescription Clarity for Indian Families" },
       {
         property: "og:description",
         content:
-          "Understand prescriptions. Track medicines. Protect your family. Join the Swasthi waitlist.",
+          "Decode handwriting. Understand medicines. Govern family health. Private beta. Built for Indian prescriptions, not generic apps.",
       },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       {
