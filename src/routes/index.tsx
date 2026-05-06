@@ -301,17 +301,17 @@ function Index() {
             </h2>
             <div className="space-y-4 text-foreground/80">
               <p>
-                My grandmother's BP medicine kept changing. Handwritten prescriptions piled up. My mom couldn't remember which dose was when. One missed dose led to complications.
+                When we visited doctors, prescriptions were always a mess—old papers to carry, confusing instructions to follow, and medicines that were easy to forget or misunderstand once we got home.
               </p>
               <p>
-                That moment changed me. I realized: India needs a prescription tool built specifically for Indian families—not a copy of Western apps that don't understand our prescriptions, our families, or our trust models.
+                We built Swasthi because our own family struggled with this: not knowing which medicine to take when, missing doses, or realizing too late that medicines were over.
               </p>
               <p>
-                So I built Swasthi. Not to replace doctors. Not to sell medicines. Just to make sure no family misses or misunderstands their medicines again.
+                Swasthi exists to bring clarity after every doctor visit—so families can store prescriptions, understand medicines, track doses, and stay in control without confusion.
               </p>
               <div className="mt-6 pt-6 border-t border-border/50">
                 <p className="text-sm font-semibold text-foreground">Founder: Swasthi Team</p>
-                <p className="text-xs text-foreground/60 mt-1">Healthcare × India × Family-first</p>
+                <p className="text-xs text-foreground/60 mt-1">Built for Indian families × Family-first</p>
               </div>
             </div>
           </div>
