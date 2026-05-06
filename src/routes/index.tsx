@@ -81,7 +81,7 @@ function Index() {
   const whatsappMessage = encodeURIComponent(
     "Hi Swasthi, I'd like early access to the prescription decoder. Are you onboarding more families?"
   );
-  const whatsappLink = `https://wa.me/919876543210?text=${whatsappMessage}`;
+  const whatsappLink = `https://wa.me/919035658818?text=${whatsappMessage}`;
 
   return (
     <main className="min-h-screen">
@@ -301,7 +301,7 @@ function Index() {
             </h2>
             <div className="space-y-4 text-foreground/80">
               <p>
-                When we visited doctors, prescriptions were always a mess—old papers to carry, confusing instructions to follow, and medicines that were easy to forget or misunderstand once we got home.
+                When we visited doctors, prescriptions were always a mess—old papers to carry, confusing instructions to follow, and medicines that were easy to forget or misunderstand once we [...]
               </p>
               <p>
                 We built Swasthi because our own family struggled with this: not knowing which medicine to take when, missing doses, or realizing too late that medicines were over.
