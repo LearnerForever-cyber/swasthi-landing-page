@@ -391,37 +391,6 @@ function Index() {
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="mx-auto max-w-4xl px-6 py-16 sm:py-20 lg:py-24 border-t border-border text-center">
-        <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-6 text-balance">
-          Your family deserves clarity
-        </h2>
-        <p className="text-lg text-foreground/70 mb-8 max-w-xl mx-auto">
-          Stop guessing. Start understanding. Early access is limited—secure your spot today.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a
-            href="#waitlist"
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-4 text-base font-bold text-primary-foreground transition hover:bg-primary-deep hover:shadow-lg"
-          >
-            <Smartphone className="h-5 w-5" />
-            Try Free Prescription Decoder
-          </a>
-          <a
-            href={whatsappLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-surface px-8 py-4 text-base font-bold text-foreground transition hover:bg-surface/80"
-          >
-            <MessageCircle className="h-5 w-5" />
-            Chat on WhatsApp
-          </a>
-        </div>
-        <p className="mt-6 text-xs text-muted-foreground">
-          Private beta. Limited families onboarding this month. No spam, guaranteed.
-        </p>
-      </section>
-
       <footer className="mx-auto max-w-6xl px-6 pb-10 pt-6 border-t border-border text-center text-xs text-muted-foreground">
         <div className="space-y-2">
           <p>© {new Date().getFullYear()} Swasthi • India's Prescription Clarity Platform</p>
