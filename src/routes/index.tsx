@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Toaster } from "@/components/ui/sonner";
 import { PhoneMockup } from "@/components/PhoneMockup";
-import { WaitlistForm } from "@/components/WaitlistForm";
 import { initAnalytics } from "@/lib/analytics";
 import logo from "@/assets/renomedy-logo.png";
 import icon from "@/assets/renomedy-icon.png";
@@ -237,18 +236,17 @@ function Index() {
               AI-powered prescription decoding + family medication management. Built for Indian families managing chronic care—BP, Diabetes, Thyroid, and more.
             </p>
 
-            {/* CTA Buttons */}
-            <div className="mt-8 space-y-3">
-              <WaitlistForm />
+            {/* Primary CTA Button */}
+            <div className="mt-8">
               <a
                 id="whatsapp-cta-hero"
                 href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-green-600 px-6 py-3 text-sm font-bold text-white transition hover:bg-green-700 hover:shadow-lg w-full"
+                className="inline-flex items-center justify-center gap-3 rounded-2xl bg-primary px-8 py-4 text-lg font-bold text-white shadow-xl shadow-primary/20 transition hover:bg-primary-deep hover:-translate-y-0.5 active:translate-y-0 w-full"
               >
-                <MessageCircle className="h-4 w-4" />
-                Chat on WhatsApp
+                <MessageCircle className="h-6 w-6" />
+                Join Early Access via WhatsApp
               </a>
             </div>
 
