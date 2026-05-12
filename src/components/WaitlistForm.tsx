@@ -106,7 +106,7 @@ export function WaitlistForm() {
         // Success: generate a fun position number
         setPosition(Math.floor(Math.random() * 400) + 100);
         setDone(true);
-        toast.success("Welcome to Swasthi Early Access.");
+        toast.success("Welcome to Renomedy Early Access.");
 
         // Identify user and track success
         identify(cleanEmail, {
@@ -145,7 +145,7 @@ export function WaitlistForm() {
             <p className="mt-1 text-sm text-foreground/75">
               {alreadyJoined
                 ? "We've got your email saved. Sit tight — early access is coming soon."
-                : "We'll email you the moment Swasthi opens to your family."}
+                : "We'll email you the moment Renomedy opens to your family."}
             </p>
             <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-surface px-2.5 py-1 text-muted-foreground border border-border">
@@ -194,7 +194,7 @@ export function WaitlistForm() {
       </div>
       <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
         <ShieldCheck className="h-3.5 w-3.5 text-primary" />
-        Private • Secure • Built for Indian prescriptions • No spam, ever.
+        Private • Secure • Family Care Simplified • No spam, ever.
       </p>
     </form>
   );
