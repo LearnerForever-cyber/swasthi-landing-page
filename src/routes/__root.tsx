@@ -58,6 +58,11 @@ export const Route = createRootRoute({
         rel: "icon",
         href: "/renomedy-icon.png",
         type: "image/png",
+        sizes: "any",
+      },
+      {
+        rel: "apple-touch-icon",
+        href: "/renomedy-icon.png",
       },
     ],
   }),

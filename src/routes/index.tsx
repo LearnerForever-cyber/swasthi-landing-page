@@ -139,26 +139,6 @@ function Index() {
     teal: { bg: "bg-teal-100", icon: "text-teal-600" },
   };
 
-  const testimonials = [
-    {
-      quote: "My father's prescription had 6 medicines I didn't understand. Renomedy decoded it in seconds. Now we never miss a dose.",
-      name: "Priya R.",
-      role: "Caregiver, Bangalore",
-      stars: 5,
-    },
-    {
-      quote: "Managing meds for my elderly parents used to be chaos. Now I get reminders and can track everything from one place.",
-      name: "Arjun M.",
-      role: "Son & Caregiver, Mumbai",
-      stars: 5,
-    },
-    {
-      quote: "Finally an app that understands Indian prescriptions. OD, BD, TDS—it explains everything clearly. Game changer.",
-      name: "Sunita K.",
-      role: "Diabetic Patient, Chennai",
-      stars: 5,
-    },
-  ];
 
   const plans = [
     {
@@ -223,7 +203,7 @@ function Index() {
             <img
               src={icon}
               alt="Renomedy icon"
-              className="h-9 w-9 rounded-xl object-cover ring-1 ring-border"
+              className="h-9 w-9 object-contain"
             />
             <span className="font-display text-lg font-semibold tracking-tight text-foreground">
               Renomedy
@@ -392,34 +372,9 @@ function Index() {
         </div>
       </section>
 
-      {/* Social Proof / Testimonials */}
+      {/* Pain Points Callout */}
       <section className="mx-auto max-w-6xl px-6 py-16 sm:py-20 lg:py-24 border-t border-border">
-        <div className="mb-12 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground text-balance">
-            Families who found clarity
-          </h2>
-          <p className="mt-3 text-base text-foreground/70">
-            Real caregivers. Real prescriptions. Real relief.
-          </p>
-        </div>
-        <div className="grid md:grid-cols-3 gap-6">
-          {testimonials.map((t, i) => (
-            <div key={i} className="rounded-2xl border border-border bg-surface/50 p-6 flex flex-col gap-4">
-              <div className="flex gap-0.5">
-                {Array.from({ length: t.stars }).map((_, s) => (
-                  <Star key={s} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-                ))}
-              </div>
-              <p className="text-sm text-foreground/80 leading-relaxed flex-1">"{t.quote}"</p>
-              <div>
-                <p className="text-sm font-semibold text-foreground">{t.name}</p>
-                <p className="text-xs text-muted-foreground">{t.role}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-        {/* Pain points callout */}
-        <div className="mt-10 rounded-2xl border border-border bg-gradient-to-br from-primary-soft/40 to-mint/20 p-8">
+        <div className="rounded-2xl border border-border bg-gradient-to-br from-primary-soft/40 to-mint/20 p-8">
           <h3 className="text-xl font-bold text-foreground mb-4">Sound familiar?</h3>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm text-foreground/80">
             {[
@@ -600,7 +555,7 @@ function Index() {
       {/* Footer */}
       <footer className="mx-auto max-w-6xl px-6 pb-10 pt-6 border-t border-border text-center text-xs text-muted-foreground">
         <div className="flex items-center justify-center gap-2 mb-3">
-          <img src={icon} alt="Renomedy" className="h-6 w-6 rounded-lg object-cover" />
+          <img src={icon} alt="Renomedy" className="h-6 w-6 object-contain" />
           <span className="font-semibold text-foreground text-sm">Renomedy</span>
         </div>
         <div className="space-y-2">
