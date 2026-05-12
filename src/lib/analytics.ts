@@ -22,7 +22,7 @@ export function initAnalytics() {
     });
     initialized = true;
     track("landing_page_viewed", {
-      page: "swasthi_landing",
+      page: "renomedy_landing",
     });
   } catch (error) {
     console.error("Failed to initialize PostHog:", error);
@@ -44,7 +44,7 @@ export function track(
     // Sanitize properties to never include full email
     const sanitized = {
       ...properties,
-      page: "swasthi_landing",
+      page: "renomedy_landing",
     };
     if (sanitized.email && typeof sanitized.email === "string") {
       sanitized.email_domain = getEmailDomain(sanitized.email);

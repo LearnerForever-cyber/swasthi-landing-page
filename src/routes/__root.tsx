@@ -29,20 +29,25 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Swasthi — India's Prescription Clarity + Family Medication Governance Platform" },
+      { title: "Renomedy — Family Prescription & Medication Care" },
       {
         name: "description",
         content:
-          "Decode Indian prescriptions (OD/BD/TDS). Manage family medicines with privacy. Private beta for BP, Diabetes, Thyroid families. Founder-built. Doctor-supported.",
+          "Understand prescriptions, manage medicines, and coordinate care for your whole family. Family Care Simplified. Built for Indian families managing chronic care.",
       },
-      { property: "og:title", content: "Swasthi — Prescription Clarity for Indian Families" },
+      { property: "og:title", content: "Renomedy — Family Care Simplified" },
       {
         property: "og:description",
         content:
-          "Decode handwriting. Understand medicines. Govern family health. Private beta. Built for Indian prescriptions, not generic apps.",
+          "Understand prescriptions, manage medicines, and care for your family with confidence. Prescription scanning, medication reminders, caregiver coordination.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Renomedy — Family Care Simplified" },
+      {
+        name: "twitter:description",
+        content: "Understand prescriptions, manage medicines, and care for your family with confidence.",
+      },
     ],
     links: [
       {
@@ -51,12 +56,9 @@ export const Route = createRootRoute({
       },
       {
         rel: "icon",
-        href: "/favicon.svg",
-        type: "image/svg+xml",
+        href: "/renomedy-icon.png",
+        type: "image/png",
       },
-    ],
-    meta: [
-      { name: "theme-color", content: "#0f172a" },
     ],
   }),
   shellComponent: RootShell,
