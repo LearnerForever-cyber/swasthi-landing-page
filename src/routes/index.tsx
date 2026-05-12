@@ -223,7 +223,7 @@ function Index() {
             <img
               src={icon}
               alt="Renomedy icon"
-              className="h-9 w-9 rounded-xl object-cover ring-1 ring-border"
+              className="h-9 w-9 object-contain"
             />
             <span className="font-display text-lg font-semibold tracking-tight text-foreground">
               Renomedy
@@ -600,7 +600,7 @@ function Index() {
       {/* Footer */}
       <footer className="mx-auto max-w-6xl px-6 pb-10 pt-6 border-t border-border text-center text-xs text-muted-foreground">
         <div className="flex items-center justify-center gap-2 mb-3">
-          <img src={icon} alt="Renomedy" className="h-6 w-6 rounded-lg object-cover" />
+          <img src={icon} alt="Renomedy" className="h-6 w-6 object-contain" />
           <span className="font-semibold text-foreground text-sm">Renomedy</span>
         </div>
         <div className="space-y-2">
